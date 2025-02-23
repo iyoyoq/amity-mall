@@ -1,30 +1,112 @@
 <template>
-  <div class="demo-container">
-    <tiny-container style="margin: 0" pattern="fashion">
-      <div class="demo-center">Main</div>
-      <template #header>
-        <div class="demo-center">Header</div>
-      </template>
-      <template #aside>
-        <div class="demo-center">Aside</div>
-      </template>
-      <template #footer>
-        <div class="demo-center">Footer</div>
-      </template>
-    </tiny-container>
-  </div>
+  <a-layout class="layout-demo">
+    <a-layout-sider
+        hide-trigger
+        collapsible
+        :collapsed="collapsed"
+    >
+      <div class="logo">
+        <span class="company-name" v-show="!collapsed">{{ companyName }}</span>
+      </div>
+      <a-menu
+          :defaultOpenKeys="['0']"
+          :defaultSelectedKeys="['0']"
+          :style="{ width: '100%' }"
+          @menuItemClick="onClickMenuItem"
+      >
+        <a-menu-item key="0">
+          <template #icon><IconApps /></template>
+          首页
+        </a-menu-item>
+
+        <a-menu-item key="1">
+          <template #icon><IconStar /></template>
+          我的收藏
+        </a-menu-item>
+
+        <a-menu-item key="2">
+          <template #icon><ShoppingCartIcon /></template>
+          购物车
+        </a-menu-item>
+
+        <a-menu-item key="3">
+          <template #icon><IconFile /></template>
+          订单管理
+        </a-menu-item>
+
+        <a-menu-item key="4">
+          <template #icon><IconLocation /></template>
+          地址管理
+        </a-menu-item>
+
+        <a-menu-item key="5">
+          <template #icon><IconUser /></template>
+          个人中心
+        </a-menu-item>
+      </a-menu>
+    </a-layout-sider>
+    <a-layout>
+      <a-layout-header style="padding-left: 20px;">
+        <a-button shape="round" @click="onCollapse">
+          <IconCaretRight v-if="collapsed"/>
+          <IconCaretLeft v-else/>
+        </a-button>
+      </a-layout-header>
+      <a-layout style="padding: 0 24px;">
+        <a-breadcrumb :style="{ margin: '16px 0' }">
+          <a-breadcrumb-item>Home</a-breadcrumb-item>
+          <a-breadcrumb-item>List</a-breadcrumb-item>
+          <a-breadcrumb-item>App</a-breadcrumb-item>
+        </a-breadcrumb>
+        <a-layout-content>Content</a-layout-content>
+        <a-layout-footer>Footer</a-layout-footer>
+      </a-layout>
+    </a-layout>
+  </a-layout>
 </template>
-
 <script>
-import { TinyContainer } from '@opentiny/vue'
+import { defineComponent, ref } from 'vue'
+import { Message } from '@arco-design/web-vue'
+import {
+  IconCaretRight,
+  IconCaretLeft,
+  IconUser,
+  IconApps,
+  IconStar,
+  IconFile,
+  IconLocation,
+} from '@arco-design/web-vue/es/icon'
+import ShoppingCartIcon from '@/components/icons/ShoppingCartIcon.vue'
 
-export default {
+export default defineComponent({
   components: {
-    TinyContainer
-  }
-}
-</script>
+    IconCaretRight,
+    IconCaretLeft,
+    IconUser,
+    IconApps,
+    IconStar,
+    IconFile,
+    IconLocation,
+    ShoppingCartIcon,
+  },
+  setup () {
+    const collapsed = ref(false)
+    const companyName = ref('骑虎网络技术有限公司')
 
+    const onCollapse = () => {
+      collapsed.value = !collapsed.value
+    }
+    return {
+      collapsed,
+      companyName,
+      onCollapse,
+      onClickMenuItem (key) {
+        Message.info({ content: `You select ${key}`, showIcon: true })
+      },
+    }
+  },
+})
+</script>
 <style scoped>
 /* 删除 :root 相关的样式定义 */
 
@@ -94,48 +176,7 @@ export default {
   color: var(--color-text-1);
   font-size: 16px;
   font-weight: bold;
-}
-.option-row .tiny-radio-group {
-  flex-wrap: wrap;
-  height: 60px;
-}
-.demo-container .tiny-container {
-  height: 300px;
-  color: #5f6774;
-  text-align: center;
-  font-size: 18px;
-  position: relative;
-  margin-top: 24px;
-}
-
-.demo-container .tiny-container :deep(.tiny-container__header) {
-  background-color: #ecf8ff;
-  border: 3px solid #ffffff;
-  color: #5b90af;
-}
-
-.demo-container .tiny-container :deep(.tiny-container__aside) {
-  background-color: #fff0f0;
-  border: 3px solid #ffffff;
-  color: #d27070;
-}
-
-.demo-container .tiny-container :deep(.tiny-container__main) {
-  background-color: #fffdec;
-  border: 3px solid #ffffff;
-  color: #b1a859;
-}
-
-.demo-container .tiny-container :deep(.tiny-container__footer) {
-  background-color: #e8ffed;
-  border: 3px solid #ffffff;
-  color: #84a18a;
-}
-.demo-center {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  white-space: nowrap;
+  transition: opacity 0.2s;
 }
 </style>

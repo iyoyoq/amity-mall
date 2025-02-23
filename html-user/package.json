@@ -9,14 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@opentiny/vue": "^3.21.2",
+    "@arco-plugins/vite-vue": "^1.4.5",
     "axios": "^1.7.9",
     "json-bigint": "^1.0.0",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
-    "@opentiny/unplugin-tiny-vue": "^1.0.0",
+    "@arco-design/web-vue": "^2.56.3",
     "@vitejs/plugin-vue": "^5.2.1",
     "less": "^4.2.2",
     "vite": "^6.0.1"
