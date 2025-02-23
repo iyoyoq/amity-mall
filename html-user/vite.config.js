@@ -1,14 +1,12 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import { vitePluginForArco } from '@arco-plugins/vite-vue'
+import autoImportPlugin from '@opentiny/unplugin-tiny-vue'
 import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    vue(), vitePluginForArco({
-      style: 'css',
-    })],
+    vue(), autoImportPlugin('vite')],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
